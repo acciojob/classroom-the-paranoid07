@@ -50,9 +50,13 @@ public class StudentRepository {
         return teacher;
     }
     public List<String> getStudentsByTeacherName(String teacherName){
+
+            List<String>studentsist=new ArrayList<>();
+        if(!(teacherStudentDb.containsKey(teacherName)))
+            return studentsist;
         HashSet<Student>students=teacherStudentDb.get(teacherName);
 
-        List<String>studentsist=new ArrayList<>();
+
         for(Student student:students){
             studentsist.add(student.getName());
         }
@@ -60,18 +64,22 @@ public class StudentRepository {
     }
     public List<String> getAllStudents(){
         List<String>studentsList=new ArrayList<>();
-        for (Student student: studentDb.values()){
-            studentsList.add(student.getName());
+        for (String studentName: studentDb.keySet()){
+            studentsList.add(studentName);
         }
         return studentsList;
     }
     public void deleteTeacherByName(String teacherName){
         teacherDb.remove(teacherName);
         teacherStudentDb.remove(teacherName);
+
+
     }
     public void deleteAllTeachers(){
         teacherDb.clear();
         teacherStudentDb.clear();
+
+
     }
 
 

@@ -34,11 +34,17 @@ public class Application {
 //		studentController.addStudentTeacherPair("manu","amir");
 //		studentController.addStudentTeacherPair("ankit","arvind");
 //		studentController.addStudentTeacherPair("aman","arvind");
-
-//		List<String>students=studentController.getStudentsByTeacherName("amir");
-//		System.out.println(students.toString());
-
-
+//
+//		System.out.println("My name is anish pal");
+//
+//		StudentRepository studentRepository=new StudentRepository();
+//
+//		System.out.println(studentController.deleteTeacherByName("amir"));
+//
+//		for(String teacherName:studentRepository.teacherDb.keySet()){
+//			System.out.println("teachers name = "+teacherName);
+//		}
+//		System.out.println(studentController.deleteAllTeachers());
 
 	}
 }

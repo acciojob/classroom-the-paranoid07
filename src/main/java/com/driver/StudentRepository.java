@@ -13,7 +13,7 @@ import java.util.List;
 public class StudentRepository {
     HashMap<String,Student> studentDb= new HashMap<>();
     HashMap<String,Teacher> teacherDb=new HashMap<>();
-    HashMap<String,HashSet<Student>>teacherStudentDb=new HashMap<>();
+    HashMap<String,HashSet<String>>teacherStudentDb=new HashMap<>();
 
     public void addStudent(Student student){
         String key=student.getName();
@@ -26,19 +26,9 @@ public class StudentRepository {
     }
 
     public void addStudentTeacherPair(String studentName, String teacherName){
-        if(!(studentDb.containsKey(studentName)) && !(teacherDb.containsKey(teacherName)))
-            return;
-
-        Student student=studentDb.get(studentName);
-        if(!(teacherStudentDb.containsKey(teacherName))){
-            Teacher teacher=teacherDb.get(teacherName);
-            HashSet<Student>studentList=new HashSet<>();
-            studentList.add(student);
-            teacherStudentDb.put(teacherName,studentList);
-            return;
-        }
-        HashSet<Student>studentList=teacherStudentDb.get(teacherName);
-        studentList.add(student);
+        HashSet<String >students=teacherStudentDb.get(teacherName);
+        students.add(studentName);
+        teacherStudentDb.put(teacherName,students);
     }
 
     public Student getStudentByName(String name){
@@ -51,14 +41,14 @@ public class StudentRepository {
     }
     public List<String> getStudentsByTeacherName(String teacherName){
 
-            List<String>studentsist=new ArrayList<>();
+        List<String>studentsist=new ArrayList<>();
         if(!(teacherStudentDb.containsKey(teacherName)))
             return studentsist;
-        HashSet<Student>students=teacherStudentDb.get(teacherName);
+        HashSet<String>students=teacherStudentDb.get(teacherName);
 
 
-        for(Student student:students){
-            studentsist.add(student.getName());
+        for(String student:students){
+            studentsist.add(student);
         }
         return studentsist;
     }
@@ -71,11 +61,9 @@ public class StudentRepository {
     }
     public void deleteTeacherByName(String teacherName){
 
-        if(!((teacherDb.containsKey(teacherName)) || teacherStudentDb.containsKey(teacherName)))
-            return;;
-            HashSet<Student> students=teacherStudentDb.get(teacherName);
 
-            for(Student student:students){
+
+            for(String student:teacherStudentDb.get(teacherName)){
                 studentDb.remove(student);
             }
         teacherStudentDb.remove(teacherName);
@@ -84,9 +72,13 @@ public class StudentRepository {
 
     }
     public void deleteAllTeachers(){
-        teacherStudentDb.clear();
-        teacherDb.clear();
-        studentDb.clear();
+       for(String teacherName:teacherDb.keySet()){
+           for(String student:teacherStudentDb.get(teacherName)){
+               studentDb.remove(student);
+           }
+           teacherStudentDb.remove(teacherName);
+           teacherDb.remove(teacherName);
+       }
 
 
 

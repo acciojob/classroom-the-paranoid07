@@ -26,7 +26,7 @@ public class StudentRepository {
     }
 
     public void addStudentTeacherPair(String studentName, String teacherName){
-        if(!(studentDb.containsKey(studentName) && teacherDb.containsKey(teacherName)))
+        if(!(studentDb.containsKey(studentName)) && !(teacherDb.containsKey(teacherName)))
             return;
 
         Student student=studentDb.get(studentName);
@@ -70,14 +70,16 @@ public class StudentRepository {
         return studentsList;
     }
     public void deleteTeacherByName(String teacherName){
-        teacherDb.remove(teacherName);
+
         teacherStudentDb.remove(teacherName);
+        teacherDb.remove(teacherName);
 
 
     }
     public void deleteAllTeachers(){
-        teacherDb.clear();
         teacherStudentDb.clear();
+        teacherDb.clear();
+
 
 
     }

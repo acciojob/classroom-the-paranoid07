@@ -40,7 +40,7 @@ public class StudentService {
         return studentRepository.getAllStudents();
     }
     public void deleteTeacherByName(String teacherName){
-         studentRepository.deleteAllTeachers();
+         studentRepository.deleteTeacherByName(teacherName);
     }
     public void deleteAllTeachers(){
         studentRepository.deleteAllTeachers();

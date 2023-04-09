@@ -71,6 +71,13 @@ public class StudentRepository {
     }
     public void deleteTeacherByName(String teacherName){
 
+        if(!((teacherDb.containsKey(teacherName)) || teacherStudentDb.containsKey(teacherName)))
+            return;;
+            HashSet<Student> students=teacherStudentDb.get(teacherName);
+
+            for(Student student:students){
+                studentDb.remove(student);
+            }
         teacherStudentDb.remove(teacherName);
         teacherDb.remove(teacherName);
 
@@ -79,6 +86,7 @@ public class StudentRepository {
     public void deleteAllTeachers(){
         teacherStudentDb.clear();
         teacherDb.clear();
+        studentDb.clear();
 
 
 
